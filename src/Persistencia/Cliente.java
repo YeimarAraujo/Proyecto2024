@@ -26,4 +26,15 @@ public class Cliente extends Cuenta {
     }
     
   
+    public void perfilCliente(Cliente cliente) {
+        JTextArea salida = new JTextArea();
+        salida.setText("PERFIL DEL CLIENTE\n");
+        salida.append("Cedula            : " + cliente.getCedula()
+                + "\nNombre de Usuario   : " + cliente.getUsername()
+                + "\nCorreo Electrónico  : " + cliente.getCorreoElectronico()
+                + "\nEdad                : " + cliente.getEdad());
+        salida.append("\n\n");
+        JOptionPane.showMessageDialog(null, salida);
+    }
+
 }

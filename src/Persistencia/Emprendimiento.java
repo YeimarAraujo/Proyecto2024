@@ -20,6 +20,9 @@ public class Emprendimiento implements GestionReseña {
     private String nombreEmprendimiento;
     private String nit;
     private String direccion;
+    private Producto producto;
+    private Emprendedor emp = new Emprendedor();
+    private Emprendimiento emprendimiento;
     private ArrayList<Reseña> reseñas = new ArrayList<>();
     private ArrayList<Producto> productos = new ArrayList<>();
 
@@ -77,7 +80,7 @@ public class Emprendimiento implements GestionReseña {
             JOptionPane.showMessageDialog(null, "Producto encontrado con éxito "
                     + "\nCódigo del Producto : " + codigo + ": \n");
             mostrarProducto(productoEncontrado);
-            menu.menuReseñasProductos(productoEncontrado);
+            producto.menuReseñasProductos(productoEncontrado);
 
         } else {
             JOptionPane.showMessageDialog(null, "Producto " + codigo + " no encontrado.");
@@ -145,6 +148,10 @@ public class Emprendimiento implements GestionReseña {
     public ArrayList<Producto> getProductos() {
         return productos;
     }
+ 
+
+    
+
 
     @Override
     public void agregarReseña() {
@@ -164,6 +171,7 @@ public class Emprendimiento implements GestionReseña {
     public ArrayList<Reseña> obtenerReseñas() {
         return reseñas;
     }
+  
 
 }
 

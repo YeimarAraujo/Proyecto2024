@@ -6,6 +6,8 @@ package Persistencia;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -18,6 +20,7 @@ public class Producto implements GestionReseña{
     private double precio;
     private String descripcion;
     private String tipo;
+    private Emprendimiento emprendimiento;
     private ArrayList<Reseña> reseñas = new ArrayList<>();
 
 
@@ -59,6 +62,64 @@ public class Producto implements GestionReseña{
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+        public void mostrarReseñasPorProducto(Producto producto) {
+        JTextArea textArea = new JTextArea(10, 30);
+        textArea.setEditable(false);
+
+        ArrayList<Reseña> reseñasDelProducto = producto.obtenerReseñas();
+
+        if (reseñasDelProducto.isEmpty()) {
+            textArea.setText("No hay reseñas para este producto.");
+        } else {
+            StringBuilder sb = new StringBuilder();
+            double suma = 0;
+            int totalReseñas = reseñasDelProducto.size();
+
+            for (Reseña reseña : reseñasDelProducto) {
+                sb.append("Fecha: ").append(reseña.getFecha())
+                        .append("\nCalificación: ").append(reseña.getCalificacion())
+                        .append("\nDescripción: ").append(reseña.getDescripcion())
+                        .append("\n\n");
+                suma += reseña.getCalificacion();
+            }
+
+            double promedio = (totalReseñas > 0) ? (suma / totalReseñas) : 0;
+            sb.append("Promedio de calificaciones: ").append(promedio);
+
+            textArea.setText(sb.toString());
+        }
+
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        JOptionPane.showMessageDialog(null, scrollPane, "Reseñas del Producto", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+      public void menuReseñasProductos(Producto producto) {
+        int op = Integer.parseInt(JOptionPane.showInputDialog(
+                "\n[1] Agregar reseña"
+                + "\n[2] Ver reseñas"
+                + "\n[3] ver informacion del producto"
+                + "\n[4] Salir"
+                + "\nElija una opción :"));
+        switch (op) {
+            case 1:
+                producto.agregarReseña();
+                menuReseñasProductos(producto);
+                break;
+            case 2:
+                mostrarReseñasPorProducto(producto);
+                menuReseñasProductos(producto);
+                break;
+            case 3:
+                emprendimiento.mostrarProducto(producto);
+                menuReseñasProductos(producto);
+                break;
+            case 4:
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Opción no válida");
+                break;
+        }
     }
     
 

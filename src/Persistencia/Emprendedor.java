@@ -55,6 +55,15 @@ public class Emprendedor extends Cuenta {
     JScrollPane scrollPane = new JScrollPane(salida);
     JOptionPane.showMessageDialog(null, scrollPane, "Productos del Emprendimiento", JOptionPane.INFORMATION_MESSAGE);
 }
-   
+    public void perfilEmprendedor(Emprendedor emprendedor) {
+        JTextArea salida = new JTextArea();
+        salida.setText("PERFIL DEL EMPRENDEDOR\n");
+        salida.append("Cedula            : " + emprendedor.getCedula()
+                + "\nNombre de Usuario   : " + emprendedor.getUsername()
+                + "\nCorreo Electrónico  : " + emprendedor.getCorreoElectronico()
+                + "\nEdad                : " + emprendedor.getEdad());
+        salida.append("\n\n");
+        JOptionPane.showMessageDialog(null, salida);
+    }
 
 }
