@@ -5,6 +5,8 @@
 package Persistencia;
 
 import Datos.Cuenta;
+import Presentacion.Menu;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -35,6 +37,8 @@ public class Emprendedor extends Cuenta {
     public void agregarProducto (Producto producto){
         emprendimiento.agregarProducto(producto);
     }
+    
+    
     public void mostrarProductosEmprendimiento(Emprendimiento emprendimiento) {
     JTextArea salida = new JTextArea(15, 30); 
     salida.setEditable(false); 
@@ -51,5 +55,6 @@ public class Emprendedor extends Cuenta {
     JScrollPane scrollPane = new JScrollPane(salida);
     JOptionPane.showMessageDialog(null, scrollPane, "Productos del Emprendimiento", JOptionPane.INFORMATION_MESSAGE);
 }
-  
+   
+
 }

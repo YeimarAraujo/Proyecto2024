@@ -30,7 +30,7 @@ public class Menu {
     private ArrayList<Emprendimiento> emprendimientos = new ArrayList<>();
     private ArrayList<Reseña> reseñas = new ArrayList<>();
     private ArrayList<Producto> productos = new ArrayList<>();
-    private Cuenta cu;
+    private Cuenta cu = new Cuenta();
 
     public Menu() {
     }
@@ -47,12 +47,12 @@ public class Menu {
                         + "\n\n ELIJA UNA OPCION :"));
                 switch (op) {
                     case 1: {
-                        registrar();
-                        iniciarSesion();
+                        cu.registrar();
+                        cu.iniciarSesion();
                     }
                     break;
                     case 2: {
-                        iniciarSesion();
+                        cu.iniciarSesion();
 
                     }
                     break;
@@ -73,77 +73,7 @@ public class Menu {
             iniciar();
         }
     }
-
-    public void registrar() {
-        JTextArea salida = new JTextArea();
-        salida.setText("REGISTRO\n");
-        String cedula, correoElectronico, username, password;
-        int edad, opcion;
-
-        cedula = JOptionPane.showInputDialog("Ingresa el numero de cedula :");
-        username = JOptionPane.showInputDialog("Ingresa el nombre de usuario :");
-        password = JOptionPane.showInputDialog("Ingresa la contraseña :");
-        correoElectronico = JOptionPane.showInputDialog("Ingresa el correo electronico :");
-        edad = Integer.parseInt(JOptionPane.showInputDialog("Ingresa tu edad :"));
-
-        c.setCedula(cedula);
-        c.setUsername(username);
-        c.setPassword(password);
-        c.setCorreoElectronico(correoElectronico);
-        c.setEdad(edad);
-        cuentas.add(c);
-
-        JOptionPane.showMessageDialog(null, "¡Cuenta creada con exito!"
-                + "\nA continuacion, Inicie sesion");
-    }
-
-    public void iniciarSesion() {
-        JTextArea salida = new JTextArea();
-        salida.setText("INICIO DE SESION\n");
-
-        String username = JOptionPane.showInputDialog("Nombre de usuario:");
-        String password = JOptionPane.showInputDialog("Contraseña:");
-
-        Cuenta cu = buscarCuenta(username);
-        if (cu != null && cu.getUsername().equals(username)) {
-            if (cu.getPassword().equals(password)) {
-
-                if (cu instanceof Cliente) {
-
-                    menuCliente();
-                } else if (cu instanceof Emprendedor) {
-
-                    menuEmprendedor();
-                }
-            } else {
-                JOptionPane.showMessageDialog(salida, "CONTRASEÑA INCORRECTA");
-            }
-        } else {
-            JOptionPane.showMessageDialog(salida, "USUARIO INCORRECTO");
-        }
-    }
-
-    public void perfilCliente(Cliente cliente) {
-        JTextArea salida = new JTextArea();
-        salida.setText("PERFIL DEL CLIENTE\n");
-        salida.append("Cedula            : " + cliente.getCedula()
-                + "\nNombre de Usuario   : " + cliente.getUsername()
-                + "\nCorreo Electrónico  : " + cliente.getCorreoElectronico()
-                + "\nEdad                : " + cliente.getEdad());
-        salida.append("\n\n");
-        JOptionPane.showMessageDialog(null, salida);
-    }
-
-    public void perfilEmprendedor(Emprendedor emprendedor) {
-        JTextArea salida = new JTextArea();
-        salida.setText("PERFIL DEL EMPRENDEDOR\n");
-        salida.append("Cedula           : " + emprendedor.getCedula()
-                + "\nNombre de Usuario  : " + emprendedor.getUsername()
-                + "\nCorreo Electrónico : " + emprendedor.getCorreoElectronico()
-                + "\nEdad               : " + emprendedor.getEdad());
-        salida.append("\n\n");
-        JOptionPane.showMessageDialog(null, salida);
-    }
+    
 
     public void menuCliente() {
         int opcion, cont = 0;
@@ -159,16 +89,16 @@ public class Menu {
                         + "\n\nELIJA UNA OPCIÓN:"));
                 switch (op) {
                     case 1:
-                        buscarProductos();
+                        emprendimiento.buscarProductos();
                         break;
                     case 2:
-                        buscarEmprendimiento();
+                        cu.buscarEmprendimiento();
                         break;
                     case 3:
-                        convertirseEnEmprendedor();
+                        cu.convertirseEnEmprendedor();
                         break;
                     case 4:
-                        perfilCliente(c);
+                       cu.perfilCliente(c);
                         break;
                     case 5:
                         JOptionPane.showMessageDialog(null, "Saliendo...");
@@ -211,17 +141,17 @@ public class Menu {
                         emprendimiento.eliminarProducto();
                         break;
                     case 3:
-                        buscarProductos();
+                        emprendimiento.buscarProductos();
                         break;
                     case 4:
-                        buscarEmprendimiento();
+                        cu.buscarEmprendimiento();
                         break;
                     case 5:
-                        convertirEmprendedorACliente();
-                        iniciarSesion();
+                        cu.convertirEmprendedorACliente();
+                        cu.iniciarSesion();
                         break;
                     case 6:
-                        perfilEmprendedor(emp);
+                        cu.perfilEmprendedor(emp);
                         break;
                     case 7:
                         JOptionPane.showMessageDialog(null, "Saliendo...");
@@ -259,7 +189,7 @@ public class Menu {
                 menuReseñasProductos(producto);
                 break;
             case 3:
-                mostrarProducto(producto);
+                emprendimiento.mostrarProducto(producto);
                 menuReseñasProductos(producto);
                 break;
             case 4:
@@ -298,15 +228,7 @@ public class Menu {
         }
     }
 
-    public Cuenta buscarCuenta(String username) {
-        for (int i = 0; i < cuentas.size(); i++) {
-            Cuenta cuenta = cuentas.get(i);
-            if (cuenta != null && cuenta.getUsername().equals(username)) {
-                return cuenta;
-            }
-        }
-        return null;
-    }
+    
 
     /*
     public Cliente buscarCliente(String username) {
@@ -329,71 +251,7 @@ public class Menu {
         return null;
     }
      */
-    public void buscarEmprendimiento() {
-        String nombre = JOptionPane.showInputDialog("Escriba el nombre del Emprendimiento");
-        Emprendimiento emprendimientoEncontrado = null;
 
-        for (Emprendimiento emprendimiento : emprendimientos) {
-            if (emprendimiento.getNombreEmprendimiento().equals(nombre)) {
-                emprendimientoEncontrado = emprendimiento;
-                break;
-            }
-        }
-
-        if (emprendimientoEncontrado != null) {
-            JOptionPane.showMessageDialog(null, "Emprendimiento encontrado con éxito "
-                    + "\nNombre del emprendimiento : " + nombre + ": \n");
-            mostrarEmprendimiento(emprendimientoEncontrado);
-            menuReseñasEmprendimiento(emprendimiento);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Emprendimiento " + nombre + " no encontrado.");
-        }
-    }
-
-    public void buscarProductos() {
-        String codigo = JOptionPane.showInputDialog("Ingrese el código del producto");
-        Producto productoEncontrado = null;
-
-        for (Producto producto : productos) {
-            if (producto.getCodigo().equals(codigo)) {
-                productoEncontrado = producto;
-                break;
-            }
-        }
-
-        if (productoEncontrado != null) {
-            JOptionPane.showMessageDialog(null, "Producto encontrado con éxito "
-                    + "\nCódigo del Producto : " + codigo + ": \n");
-            mostrarProducto(productoEncontrado);
-            menuReseñasProductos(productoEncontrado);
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Producto " + codigo + " no encontrado.");
-        }
-    }
-
-    public void mostrarEmprendimiento(Emprendimiento emprendimiento) {
-        JTextArea salida = new JTextArea();
-        salida.setText("INFORMACION DEL EMPRENDIMIENTO\n");
-        salida.append("Codigo:   " + emprendimiento.getNombreEmprendimiento()
-                + "\nNIT       : " + emprendimiento.getNit()
-                + "\nDireccion : " + emprendimiento.getDireccion());
-        salida.append("\n\n");
-        JOptionPane.showMessageDialog(null, salida);
-    }
-
-    public void mostrarProducto(Producto producto) {
-        JTextArea salida = new JTextArea();
-        salida.setText("INFORMACION DEL PRODUCTO\n");
-        salida.append("Codigo      : " + producto.getCodigo()
-                + "\nTipo        : " + producto.getTipo()
-                + "\nNombre      : " + producto.getNombre()
-                + "\nPrecio      : " + producto.getPrecio()
-                + "\nDescripcion : " + producto.getDescripcion());
-        salida.append("\n\n");
-        JOptionPane.showMessageDialog(null, salida);
-    }
 
     public void mostrarReseñasPorProducto(Producto producto) {
         JTextArea textArea = new JTextArea(10, 30);
@@ -458,76 +316,4 @@ public class Menu {
         JOptionPane.showMessageDialog(null, scrollPane, "Reseñas del Producto", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void convertirClienteEnEmprendedor() {
-        for (int i = 0; i < cuentas.size(); i++) {
-            Cuenta cuenta = cuentas.get(i);
-
-            if (cuenta instanceof Cliente c) {
-                Emprendedor nuevoEmprendedor = new Emprendedor(
-                        c.getCedula(),
-                        c.getUsername(),
-                        c.getPassword(),
-                        c.getCorreoElectronico(),
-                        c.getEdad()
-                );
-                cuentas.remove(c);
-                cuentas.add(nuevoEmprendedor);
-                return;
-            }
-        }
     }
-
-    public void convertirEmprendedorACliente() {
-        for (int i = 0; i < cuentas.size(); i++) {
-            Cuenta cuenta = cuentas.get(i);
-
-            if (cuenta instanceof Emprendedor emp) {
-                Cliente nuevoCliente = new Cliente(
-                        emp.getCedula(),
-                        emp.getUsername(),
-                        emp.getPassword(),
-                        emp.getCorreoElectronico(),
-                        emp.getEdad()
-                );
-                cuentas.remove(emp);
-                cuentas.add(nuevoCliente);
-                iniciarSesion();
-            }
-        }
-    }
-
-    private void convertirseEnEmprendedor() {
-
-        String nombreEmprendimiento = JOptionPane.showInputDialog("Nombre del emprendimiento:");
-        String nit = JOptionPane.showInputDialog("NIT:");
-
-        int TiendaFisica = Integer.parseInt(JOptionPane.showInputDialog("¿Tiene tienda física?"
-                + "\n[1] Sí"
-                + "\n[2] No"));
-        switch (TiendaFisica) {
-            case 1:
-                String direccion = JOptionPane.showInputDialog("Dirección de la tienda:");
-                convertirClienteEnEmprendedor();
-                Emprendimiento nuevoEmprendimiento1 = new Emprendimiento(nombreEmprendimiento, nit, direccion);
-                emprendimientos.add(nuevoEmprendimiento1);
-                JOptionPane.showMessageDialog(null, "¡Te has "
-                        + "convertido en emprendedor con éxito! A continuación, inicia sesión.");
-                iniciarSesion();
-                break;
-            case 2:
-                direccion = "NO TIENE";
-                convertirClienteEnEmprendedor();
-                Emprendimiento nuevoEmprendimiento = new Emprendimiento(nombreEmprendimiento, nit, direccion);
-                emprendimientos.add(nuevoEmprendimiento);
-                JOptionPane.showMessageDialog(null, "¡Te has "
-                        + "convertido en emprendedor con éxito! A continuación, inicia sesión.");
-                iniciarSesion();
-                break;
-            default: {
-                JOptionPane.showMessageDialog(null, "Opcion no valida");
-                break;
-            }
-        }
-
-    }
-}

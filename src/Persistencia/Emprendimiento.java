@@ -4,14 +4,17 @@
  */
 package Persistencia;
 
+import Presentacion.Menu;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
  *
  * @author POWER
- */
+
+*/
 public class Emprendimiento implements GestionReseña {
 
     private String nombreEmprendimiento;
@@ -56,7 +59,43 @@ public class Emprendimiento implements GestionReseña {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
-        
+    
+    
+    public void buscarProductos() {
+        Menu menu = new Menu();
+        String codigo = JOptionPane.showInputDialog("Ingrese el código del producto");
+        Producto productoEncontrado = null;
+
+        for (Producto producto : productos) {
+            if (producto.getCodigo().equals(codigo)) {
+                productoEncontrado = producto;
+                break;
+            }
+        }
+
+        if (productoEncontrado != null) {
+            JOptionPane.showMessageDialog(null, "Producto encontrado con éxito "
+                    + "\nCódigo del Producto : " + codigo + ": \n");
+            mostrarProducto(productoEncontrado);
+            menu.menuReseñasProductos(productoEncontrado);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Producto " + codigo + " no encontrado.");
+        }
+    }
+
+       public void mostrarProducto(Producto producto) {
+        JTextArea salida = new JTextArea();
+        salida.setText("INFORMACION DEL PRODUCTO\n");
+        salida.append("Codigo      : " + producto.getCodigo()
+                + "\nTipo        : " + producto.getTipo()
+                + "\nNombre      : " + producto.getNombre()
+                + "\nPrecio      : " + producto.getPrecio()
+                + "\nDescripcion : " + producto.getDescripcion());
+        salida.append("\n\n");
+        JOptionPane.showMessageDialog(null, salida);
+    }
+    
     public void agregarProducto(Producto producto) {
         int opcion;
         do {
@@ -127,3 +166,4 @@ public class Emprendimiento implements GestionReseña {
     }
 
 }
+

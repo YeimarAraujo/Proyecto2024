@@ -5,6 +5,8 @@
 package Persistencia;
 
 import Datos.Cuenta;
+import Presentacion.Menu;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 /**
@@ -12,16 +14,16 @@ import javax.swing.JTextArea;
  * @author POWER
  */
 public class Cliente extends Cuenta {
-
+     
     public Cliente() {
+    
+        
 
     }
 
     public Cliente(String cedula, String username, String password, String correoElectronico, int edad) {
         super(cedula, username, password, correoElectronico, edad);
     }
-   
     
-
-   
+  
 }
