@@ -10,8 +10,8 @@ package Persistencia;
  */
 public class Servicio extends Producto {
 
-    public Servicio(String codigo, String nombre, double precio, String descripcion) {
-        super(codigo, nombre, precio, descripcion);
+    public Servicio(String codigo, String nombre, double precio, String descripcion, String tipo) {
+        super(codigo, nombre, precio, descripcion, tipo);
     }
     
     
